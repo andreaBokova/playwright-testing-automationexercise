@@ -4,16 +4,16 @@ export class LoginPage {
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly loginButton: Locator;
+  readonly signupUsernameInput: Locator;
   readonly signupEmailInput: Locator;
-  readonly signupPasswordInput: Locator;
   readonly signupButton: Locator;
 
   constructor(private page: Page) {
     this.emailInput = this.page.locator("[data-qa='login-email']");
     this.passwordInput = this.page.locator("[data-qa='login-password']");
     this.loginButton = this.page.locator("[data-qa='login-button']");
+    this.signupUsernameInput = this.page.locator("[data-qa='signup-name']");
     this.signupEmailInput = this.page.locator("[data-qa='signup-email']");
-    this.signupPasswordInput = this.page.locator("[data-qa='signup-password]");
     this.signupButton = this.page.locator("[data-qa='signup-button']");
   }
 
@@ -27,9 +27,9 @@ export class LoginPage {
     await this.loginButton.click();
   }
 
-  async signup(email: string, password: string) {
-    this.signupEmailInput.fill(email);
-    this.signupPasswordInput.fill(password);
-    this.signupButton.click();
+  async signup(username: string, email: string) {
+    await this.signupUsernameInput.fill(username);
+    await this.signupEmailInput.fill(email);
+    await this.signupButton.click();
   }
 }

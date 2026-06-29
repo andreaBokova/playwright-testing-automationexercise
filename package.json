@@ -1,5 +1,5 @@
 {
-  "name": "playwright-testing-automationexercise",
+  "name": "playwright-testing",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -7,9 +7,12 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
     "@types/node": "^26.0.1"
+  },
+  "dependencies": {
+    "typescript": "^6.0.3"
   }
 }
