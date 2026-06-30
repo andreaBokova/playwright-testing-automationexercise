@@ -22,6 +22,7 @@ test.describe("Register tests", () => {
     const newUser = {
       username: "testuser",
       email: `test${Date.now()}@gmail.com`,
+    //  email: `user2@test.com`,
       gender: "male",
       password: "Test123!",
       day: "6",
@@ -53,6 +54,5 @@ test.describe("Register tests", () => {
 
     await signupPage.fillAccountInfo(newUser);
 
-   await page.waitForTimeout(1000000)
   });
 });
