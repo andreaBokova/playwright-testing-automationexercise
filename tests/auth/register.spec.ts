@@ -2,7 +2,9 @@ import { test, expect } from "@playwright/test";
 import { HomePage } from "../../pages/HomePage.js";
 import { LoginPage } from "../../pages/LoginPage.js";
 import { SignupPage } from "../../pages/SignupPage.js";
-
+import { Header } from "../../pages/Header.js";
+import { AccountCreatedPage } from "../../pages/AccountCreatedPage.js";
+import { DeleteAccountPage } from "../../pages/DeleteAccountPage.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
@@ -18,11 +20,13 @@ test.describe("Register tests", () => {
     const homePage = new HomePage(page);
     const loginPage = new LoginPage(page);
     const signupPage = new SignupPage(page);
+    const accountCreatedPage = new AccountCreatedPage(page);
+    const header = new Header(page);
+    const deleteAccountPage = new DeleteAccountPage(page);
 
     const newUser = {
       username: "testuser",
       email: `test${Date.now()}@gmail.com`,
-    //  email: `user2@test.com`,
       gender: "male",
       password: "Test123!",
       day: "6",
@@ -48,11 +52,23 @@ test.describe("Register tests", () => {
 
     await expect(page.locator(".signup-form")).toBeVisible();
     const email = newUser.email;
-    console.log(`new user's email> ${email}`)
+    console.log(`new user's email> ${email}`);
     await loginPage.signup(newUser.username, email);
 
+    await expect(page).toHaveURL(/signup/);
 
     await signupPage.fillAccountInfo(newUser);
 
+    await expect(accountCreatedPage.successHeading).toBeVisible();
+
+    await accountCreatedPage.continueToHomepage();
+
+    await expect(page.getByText(/Logged in as/)).toBeVisible();
+
+    await header.deleteAccount();
+
+    await expect(deleteAccountPage.accountDeletedHeading).toBeVisible();
+
+    await deleteAccountPage.continueToHomepage();
   });
 });
