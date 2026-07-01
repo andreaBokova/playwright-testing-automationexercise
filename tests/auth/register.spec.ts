@@ -6,6 +6,13 @@ import { Header } from "../../pages/Header.js";
 import { AccountCreatedPage } from "../../pages/AccountCreatedPage.js";
 import { DeleteAccountPage } from "../../pages/DeleteAccountPage.js";
 
+let homePage: HomePage;
+let loginPage: LoginPage;
+let signupPage: SignupPage;
+let accountCreatedPage: AccountCreatedPage;
+let header: Header;
+let deleteAccountPage: DeleteAccountPage;
+
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
 
@@ -13,17 +20,16 @@ test.beforeEach(async ({ page }) => {
   if (await consentBtn.isVisible()) {
     await consentBtn.click();
   }
+  homePage = new HomePage(page);
+  loginPage = new LoginPage(page);
+  signupPage = new SignupPage(page);
+  accountCreatedPage = new AccountCreatedPage(page);
+  header = new Header(page);
+  deleteAccountPage = new DeleteAccountPage(page);
 });
 
 test.describe("Register tests", () => {
-  test("Valid register user @smoke", async ({ page }) => {
-    const homePage = new HomePage(page);
-    const loginPage = new LoginPage(page);
-    const signupPage = new SignupPage(page);
-    const accountCreatedPage = new AccountCreatedPage(page);
-    const header = new Header(page);
-    const deleteAccountPage = new DeleteAccountPage(page);
-
+  test("valid register user @smoke", async ({ page }) => {
     const newUser = {
       username: "testuser",
       email: `test${Date.now()}@gmail.com`,
@@ -70,5 +76,17 @@ test.describe("Register tests", () => {
     await expect(deleteAccountPage.accountDeletedHeading).toBeVisible();
 
     await deleteAccountPage.continueToHomepage();
+  });
+
+  test("register existing user", async ({ page }) => {
+    const existingUserEmail = "test1782839977029@gmail.com";
+    await homePage.goto();
+    await expect(page).toHaveURL("https://automationexercise.com/");
+
+    await loginPage.goto();
+    await expect(page).toHaveURL(/login/);
+
+    await loginPage.signup("username", existingUserEmail);
+    await expect(page.getByText(/Email Address already exist/));
   });
 });
