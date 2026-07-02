@@ -1,7 +1,10 @@
-import { Page } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class ProductsPage {
-  constructor(private page: Page) {}
+  readonly productsList: Locator;
+  constructor(private page: Page) {
+    this.productsList = this.page.locator(".features_items");
+  }
 
   async addToCart(productName: string) {}
 
@@ -13,7 +16,18 @@ export class ProductsPage {
 
   async filterProductsByBrand(brand: string) {}
 
-  async searchProduct(productName: string) {
+  async searchProduct(productName: string) {}
 
+  async viewNthProductDetail(n: number) {
+    const allProducts = await this.productsList
+      .locator("a[href^='/product_details/']")
+      .all();
+
+    if (n > 0 && n <= allProducts.length) {
+      const nthProductLink = this.productsList.locator(
+        `a[href='/product_details/${n}']`,
+      );
+      await nthProductLink.click();
+    }
   }
 }

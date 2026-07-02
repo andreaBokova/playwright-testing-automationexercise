@@ -34,4 +34,8 @@ export class Header {
   async gotoContact() {
     await this.contactLink.click();
   }
+
+  async gotoProducts() {
+    await this.page.locator("a[href='/products']").click();
+  }
 }
