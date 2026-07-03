@@ -13,9 +13,7 @@ export class ProductDetailsPage {
     this.productCategory = this.page.locator(
       ".product-information p:has-text('Category')",
     );
-    this.productPrice = this.page.locator(
-      ".product-information span:has-text('Rs.')",
-    );
+    this.productPrice = this.page.locator(".product-information > span > span");
     this.productAvailability = this.page.locator(
       ".product-information p:has-text('Availability')",
     );
