@@ -87,6 +87,7 @@ test.describe("Register tests", () => {
     await expect(page).toHaveURL(/login/);
 
     await loginPage.signup("username", existingUserEmail);
-    await expect(page.getByText(/Email Address already exist/));
+    await expect(page.getByText(/Email Address already exist/)).toBeVisible();
   });
+
 });

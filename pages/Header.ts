@@ -8,7 +8,7 @@ export class Header {
   readonly contactLink: Locator;
 
   constructor(private page: Page) {
-    this.cartLink = this.page.locator("a[href='/view_cart']");
+    this.cartLink = this.page.locator(".nav a[href='/view_cart']");
     this.logoutLink = this.page.locator("a[href='/logout']");
     this.deleteAccountLink = this.page.locator("a[href='/delete_account']");
     this.loginLink = this.page.locator("a[href='/login']");

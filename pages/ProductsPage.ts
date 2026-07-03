@@ -5,6 +5,8 @@ export class ProductsPage {
   readonly searchInput: Locator;
   readonly searchButton: Locator;
   readonly searchedProductsHeading: Locator;
+  readonly continueShoppingButton: Locator;
+  readonly viewCartButton: Locator;
 
   constructor(private page: Page) {
     this.productsList = this.page.locator(".features_items");
@@ -13,27 +15,38 @@ export class ProductsPage {
     this.searchedProductsHeading = this.page.locator(
       "h2:has-text('Searched Products')",
     );
+    this.continueShoppingButton = this.page.locator(".btn-success");
+    this.viewCartButton = this.page.locator("#cartModal a[href='/view_cart']");
   }
 
-  async addToCart(productName: string) {}
+  async addProductToCart(name: string) {
+    const product = this.page
+      .locator(".productinfo")
+      .filter({ has: this.page.locator("p", { hasText: name }) });
+
+    await product.locator("a.add-to-cart").click();
+  }
 
   async getDisplayedProductNames() {
     return this.page.locator(".productinfo p").allTextContents();
   }
 
-  async continueShopping() {}
+  async getDisplayedProducts() {
+    const displayedProducts = await this.productsList
+      .locator("a[href^='/product_details/']")
+      .all();
+    return displayedProducts;
+  }
+  async continueShopping() {
+    await this.continueShoppingButton.click();
+  }
 
   async filterProductsByCategory(category: string) {}
 
   async filterProductsByBrand(brand: string) {}
 
-  async searchProduct(productName: string) {}
-
   async viewNthProductDetail(n: number) {
-    const allProducts = await this.productsList
-      .locator("a[href^='/product_details/']")
-      .all();
-
+    const allProducts = await this.getDisplayedProducts();
     if (n > 0 && n <= allProducts.length) {
       const nthProductLink = this.productsList.locator(
         `a[href='/product_details/${n}']`,

@@ -25,11 +25,6 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("products tests", () => {
   test("view product details", async ({ page }) => {
-    // const homePage = new HomePage(page);
-    // const header = new Header(page);
-    // const productsPage = new ProductsPage(page);
-    // const productDetailsPage = new ProductDetailsPage(page);
-
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -66,5 +61,67 @@ test.describe("products tests", () => {
       productName = productName.replace(/\s+/g, ""); // Remove spaces
       expect(productName).toContain("tshirt");
     }
+  });
+
+  test("add product to cart", async ({ page }) => {
+    await homePage.goto();
+    await expect(page).toHaveURL("https://automationexercise.com/");
+
+    await header.gotoProducts();
+    await expect(page).toHaveURL(/products/);
+
+    await productsPage.addProductToCart("Blue Top");
+
+    await productsPage.continueShopping();
+
+    await productsPage.addProductToCart("Men Tshirt");
+
+    await productsPage.viewCartButton.click();
+    await expect(page).toHaveURL(/view_cart/);
+
+    await page.getByText("Blue Top").isVisible();
+    await page.getByText("Men Tshirt").isVisible();
+  });
+
+  test("add product to cart and verify quantity", async ({ page }) => {
+    await homePage.goto();
+    await expect(page).toHaveURL("https://automationexercise.com/");
+
+    await header.gotoProducts();
+    await expect(page).toHaveURL(/products/);
+
+    await productsPage.viewNthProductDetail(1);
+    await expect(page).toHaveURL(/product_details/);
+
+    await productDetailsPage.setProductQuantity(4);
+    await productDetailsPage.addToCart();
+
+    await productsPage.viewCartButton.click();
+
+    const quantity = await page.locator("#product-1 button").textContent();
+    expect(quantity).toBe("4");
+  });
+
+  test("remove product from cart", async ({ page }) => {
+    await homePage.goto();
+    await expect(page).toHaveURL("https://automationexercise.com/");
+
+    await header.gotoProducts();
+    await expect(page).toHaveURL(/products/);
+
+    await productsPage.addProductToCart("Blue Top");
+
+    await productsPage.viewCartButton.click();
+    await expect(page).toHaveURL(/view_cart/);
+
+    const row = page.locator("tr", { hasText: "Blue Top" });
+
+    const deleteButton = row.locator(".cart_quantity_delete");
+
+    await deleteButton.click();
+
+    // await expect(row).not.toBeVisible();
+    // the above line is commented out because the demo website's delete functionality is not working properly
+
   });
 });

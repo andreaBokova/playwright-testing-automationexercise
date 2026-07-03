@@ -8,6 +8,9 @@ export class ProductDetailsPage {
   readonly productAvailability: Locator;
   readonly productCondition: Locator;
   readonly productBrand: Locator;
+  readonly quantityInput: Locator;
+  readonly addToCartButton: Locator;
+
   constructor(private page: Page) {
     this.productName = this.page.locator(".product-information h2");
     this.productCategory = this.page.locator(
@@ -23,5 +26,15 @@ export class ProductDetailsPage {
     this.productBrand = this.page.locator(
       ".product-information p:has-text('Brand')",
     );
+    this.quantityInput = this.page.locator("#quantity");
+    this.addToCartButton = this.page.locator(".product-information button");
+  }
+
+  async setProductQuantity(quantity: number) {
+    await this.quantityInput.fill(quantity.toString());
+  }
+
+  async addToCart() {
+    await this.addToCartButton.click();
   }
 }
