@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator, expect } from "@playwright/test";
 
 export class ProductsPage {
   readonly productsList: Locator;
@@ -19,14 +19,21 @@ export class ProductsPage {
     this.viewCartButton = this.page.locator("#cartModal a[href='/view_cart']");
   }
 
-  async addProductToCart(name: string) {
-    const product = this.page
-      .locator(".productinfo")
-      .filter({ has: this.page.locator("p", { hasText: name }) });
+async addProductToCart(name: string) {
+  const product = this.page
+    .locator('.product-image-wrapper')
+    .filter({
+      has: this.page.locator('p', { hasText: name })
+    });
 
-    await product.locator("a.add-to-cart").click();
-  }
+  await product.scrollIntoViewIfNeeded();
+  await product.hover();
 
+  const addBtn = product.locator('.product-overlay a.add-to-cart');
+
+  await expect(addBtn).toBeVisible();
+  await addBtn.click();
+}
   async getDisplayedProductNames() {
     return this.page.locator(".productinfo p").allTextContents();
   }
@@ -39,6 +46,10 @@ export class ProductsPage {
   }
   async continueShopping() {
     await this.continueShoppingButton.click();
+  }
+
+  async viewCart() {
+    await this.viewCartButton.click();
   }
 
   async filterProductsByCategory(category: string) {}

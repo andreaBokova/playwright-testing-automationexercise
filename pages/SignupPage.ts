@@ -38,6 +38,7 @@ export class SignupPage {
   readonly zipCodeInput: Locator;
   readonly mobileInput: Locator;
   readonly createAccountButton: Locator;
+  readonly signupForm: Locator;
 
   constructor(private page: Page) {
     this.maleRadioButton = this.page.locator("#id_gender1");
@@ -57,6 +58,7 @@ export class SignupPage {
     this.zipCodeInput = this.page.locator("#zipcode");
     this.mobileInput = this.page.locator("#mobile_number");
     this.createAccountButton = this.page.locator("[data-qa='create-account']");
+    this.signupForm = this.page.locator("form[action='/signup']");
   }
 
   async fillAccountInfo(newUser: User) {

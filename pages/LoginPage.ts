@@ -7,6 +7,8 @@ export class LoginPage {
   readonly signupUsernameInput: Locator;
   readonly signupEmailInput: Locator;
   readonly signupButton: Locator;
+  readonly loginForm: Locator;
+  readonly signupForm: Locator;
 
   constructor(private page: Page) {
     this.emailInput = this.page.locator("[data-qa='login-email']");
@@ -15,6 +17,8 @@ export class LoginPage {
     this.signupUsernameInput = this.page.locator("[data-qa='signup-name']");
     this.signupEmailInput = this.page.locator("[data-qa='signup-email']");
     this.signupButton = this.page.locator("[data-qa='signup-button']");
+    this.loginForm = this.page.locator(".login-form");
+    this.signupForm = this.page.locator(".signup-form");
   }
 
   async goto() {
