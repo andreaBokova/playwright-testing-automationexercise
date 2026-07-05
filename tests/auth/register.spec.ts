@@ -5,6 +5,7 @@ import { SignupPage } from "../../pages/SignupPage.js";
 import { Header } from "../../pages/Header.js";
 import { AccountCreatedPage } from "../../pages/AccountCreatedPage.js";
 import { DeleteAccountPage } from "../../pages/DeleteAccountPage.js";
+import { createUser, existingUser } from "../data/users.js";
 
 let homePage: HomePage;
 let loginPage: LoginPage;
@@ -12,6 +13,7 @@ let signupPage: SignupPage;
 let accountCreatedPage: AccountCreatedPage;
 let header: Header;
 let deleteAccountPage: DeleteAccountPage;
+let newUser = createUser();
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
@@ -30,26 +32,6 @@ test.beforeEach(async ({ page }) => {
 
 test.describe("Register tests", () => {
   test("valid register user @smoke", async ({ page }) => {
-    const newUser = {
-      username: "testuser",
-      email: `test${Date.now()}@gmail.com`,
-      gender: "male",
-      password: "Test123!",
-      day: "6",
-      month: "October",
-      year: "2000",
-      firstName: "John",
-      lastName: "Doe",
-      company: "TestCo",
-      address: "Street 1",
-      country: "India",
-      state: "State",
-      city: "City",
-      zipCode: "12345",
-      mobile: "9999999999",
-      newsletter: true,
-    };
-
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -57,9 +39,8 @@ test.describe("Register tests", () => {
     await expect(page).toHaveURL(/login/);
 
     await expect(page.locator(".signup-form")).toBeVisible();
-    const email = newUser.email;
-    console.log(`new user's email> ${email}`);
-    await loginPage.signup(newUser.username, email);
+    console.log(`new user's email> ${newUser.email}`);
+    await loginPage.signup(newUser.username, newUser.email);
 
     await expect(page).toHaveURL(/signup/);
 
@@ -79,15 +60,13 @@ test.describe("Register tests", () => {
   });
 
   test("register existing user", async ({ page }) => {
-    const existingUserEmail = "test1782839977029@gmail.com";
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
     await loginPage.goto();
     await expect(page).toHaveURL(/login/);
 
-    await loginPage.signup("username", existingUserEmail);
+    await loginPage.signup("username", existingUser.email);
     await expect(page.getByText(/Email Address already exist/)).toBeVisible();
   });
-
 });
