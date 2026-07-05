@@ -19,3 +19,8 @@ export function createUser() {
     newsletter: true,
   };
 }
+
+export const existingUser = {
+  email: "test1782839977029@gmail.com",
+  password: "Test123!",
+};
