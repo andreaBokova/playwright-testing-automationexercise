@@ -1,4 +1,4 @@
-import { Page, Locator, expect } from "@playwright/test";
+import { Page, Locator } from "@playwright/test";
 
 export class CartPage {
   readonly proceedToCheckoutButton: Locator;
@@ -8,9 +8,7 @@ export class CartPage {
   constructor(private page: Page) {
     this.proceedToCheckoutButton = this.page.locator("a.check_out");
     this.cartInfoDiv = this.page.locator("#cart_info");
-    this.registerOrLoginButton = this.page.locator(
-      "#checkoutModal a[href='/login']",
-    );
+    this.registerOrLoginButton = this.page.locator("#checkoutModal a[href='/login']");
   }
 
   async proceedToCheckout() {

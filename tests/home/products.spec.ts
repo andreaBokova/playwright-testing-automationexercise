@@ -118,10 +118,12 @@ test.describe("products tests", () => {
 
     const deleteButton = row.locator(".cart_quantity_delete");
 
+    await deleteButton.scrollIntoViewIfNeeded();
+
+    await deleteButton.hover();
+
     await deleteButton.click();
 
-    // await expect(row).not.toBeVisible();
-    // the above line is commented out because the demo website's delete functionality is not working properly
-
+    await expect(row).not.toBeVisible();
   });
 });
