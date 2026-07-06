@@ -1,4 +1,5 @@
 import { expect, test } from "../../fixtures/pages.fixture.js";
+
 import path from "path";
 
 test.beforeEach(async ({ page }) => {
@@ -11,8 +12,12 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("contact tests", () => {
-  test("contact via form @smoke", async ({ page, homePage, header, contactPage }) => {
-
+  test("contact via form @smoke", async ({
+    page,
+    homePage,
+    header,
+    contactPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -26,7 +31,7 @@ test.describe("contact tests", () => {
     });
 
     // converts a relative file path into an absolute file path based on cwd
-    const filePath = path.resolve("fixtures/test-image.jpg");
+    const filePath = path.resolve("test-assets/test-image.jpg");
     await contactPage.fillContactForm(
       "John Doe",
       "john@example.com",
@@ -35,8 +40,10 @@ test.describe("contact tests", () => {
       filePath,
     );
 
+    console.log("filled in data");
+
+    await contactPage.submitButton.scrollIntoViewIfNeeded();
     await contactPage.submitButton.click();
-    console.log("form submitted");
 
     await expect(page.locator(".btn-success")).toBeVisible();
   });
