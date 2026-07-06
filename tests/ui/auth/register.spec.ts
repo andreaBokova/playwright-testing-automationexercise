@@ -1,5 +1,5 @@
-import { expect, test } from "../../fixtures/pages.fixture.js";
-import { createUser, existingUser } from "../../data/users.js";
+import { expect, test } from "../../../fixtures/pages.fixture.js";
+import { createUser, existingUser } from "../../../data/users.js";
 
 let newUser = createUser();
 

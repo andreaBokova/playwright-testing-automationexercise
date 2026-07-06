@@ -1,4 +1,4 @@
-import { expect, test } from "../../fixtures/pages.fixture.js";
+import { expect, test } from "../../../fixtures/pages.fixture.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");

@@ -26,9 +26,6 @@ async addProductToCart(name: string) {
       has: this.page.locator('p', { hasText: name })
     });
 
-  await product.scrollIntoViewIfNeeded();
-  await product.hover();
-
   const addBtn = product.locator('.product-overlay a.add-to-cart');
 
   await expect(addBtn).toBeVisible();

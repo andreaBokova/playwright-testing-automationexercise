@@ -1,5 +1,5 @@
-import { expect, test } from "../../fixtures/pages.fixture.js";
-import { existingUser } from "../../data/users.js";
+import { expect, test } from "../../../fixtures/pages.fixture.js";
+import { existingUser } from "../../../data/users.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
