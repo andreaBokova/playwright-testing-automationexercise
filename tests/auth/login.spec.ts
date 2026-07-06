@@ -1,12 +1,5 @@
-import { test, expect } from "@playwright/test";
-import { LoginPage } from "../../pages/LoginPage.js";
-import { Header } from "../../pages/Header.js";
-import { HomePage } from "../../pages/HomePage.js";
-import { existingUser } from "../data/users.js";  
-
-let loginPage: LoginPage;
-let header: Header;
-let homePage: HomePage;
+import { expect, test } from "../../fixtures/pages.fixture.js";
+import { existingUser } from "../../data/users.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
@@ -15,15 +8,10 @@ test.beforeEach(async ({ page }) => {
   if (await consentBtn.isVisible()) {
     await consentBtn.click();
   }
-
-  loginPage = new LoginPage(page);
-  header = new Header(page);
-  homePage = new HomePage(page);
 });
 
 test.describe("Login tests", () => {
-  test("valid login", async ({ page }) => {
-
+  test("valid login", async ({ homePage, header, loginPage, page }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -32,8 +20,7 @@ test.describe("Login tests", () => {
     await loginPage.login(existingUser.email, existingUser.password);
     await expect(page.getByText(/Logged in as/)).toBeVisible();
   });
-  test("invalid login", async ({ page }) => {
-
+  test("invalid login", async ({ homePage, header, loginPage, page }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 

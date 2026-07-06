@@ -1,18 +1,6 @@
-import { test, expect } from "@playwright/test";
-import { HomePage } from "../../pages/HomePage.js";
-import { LoginPage } from "../../pages/LoginPage.js";
-import { SignupPage } from "../../pages/SignupPage.js";
-import { Header } from "../../pages/Header.js";
-import { AccountCreatedPage } from "../../pages/AccountCreatedPage.js";
-import { DeleteAccountPage } from "../../pages/DeleteAccountPage.js";
-import { createUser, existingUser } from "../data/users.js";
+import { expect, test } from "../../fixtures/pages.fixture.js";
+import { createUser, existingUser } from "../../data/users.js";
 
-let homePage: HomePage;
-let loginPage: LoginPage;
-let signupPage: SignupPage;
-let accountCreatedPage: AccountCreatedPage;
-let header: Header;
-let deleteAccountPage: DeleteAccountPage;
 let newUser = createUser();
 
 test.beforeEach(async ({ page }) => {
@@ -22,16 +10,18 @@ test.beforeEach(async ({ page }) => {
   if (await consentBtn.isVisible()) {
     await consentBtn.click();
   }
-  homePage = new HomePage(page);
-  loginPage = new LoginPage(page);
-  signupPage = new SignupPage(page);
-  accountCreatedPage = new AccountCreatedPage(page);
-  header = new Header(page);
-  deleteAccountPage = new DeleteAccountPage(page);
 });
 
 test.describe("Register tests", () => {
-  test("valid register user @smoke", async ({ page }) => {
+  test("valid register user @smoke", async ({
+    page,
+    homePage,
+    loginPage,
+    signupPage,
+    accountCreatedPage,
+    deleteAccountPage,
+    header,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -59,7 +49,7 @@ test.describe("Register tests", () => {
     await deleteAccountPage.continueToHomepage();
   });
 
-  test("register existing user", async ({ page }) => {
+  test("register existing user", async ({ page, homePage, loginPage }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 

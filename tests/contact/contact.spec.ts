@@ -1,8 +1,5 @@
-import { expect, test } from "@playwright/test";
+import { expect, test } from "../../fixtures/pages.fixture.js";
 import path from "path";
-import { HomePage } from "../../pages/HomePage.js";
-import { Header } from "../../pages/Header.js";
-import { ContactPage } from "../../pages/ContactPage.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
@@ -14,10 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("contact tests", () => {
-  test("contact via form", async ({ page }) => {
-    const homePage = new HomePage(page);
-    const header = new Header(page);
-    const contactPage = new ContactPage(page);
+  test("contact via form", async ({ page, homePage, header, contactPage }) => {
 
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
@@ -32,8 +26,7 @@ test.describe("contact tests", () => {
     });
 
     // converts a relative file path into an absolute file path based on cwd
-    const filePath = path.resolve("tests/fixtures/test-image.jpg");
-
+    const filePath = path.resolve("fixtures/test-image.jpg");
     await contactPage.fillContactForm(
       "John Doe",
       "john@example.com",

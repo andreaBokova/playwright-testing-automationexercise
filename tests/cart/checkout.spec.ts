@@ -1,27 +1,6 @@
-import { expect, test } from "../fixtures.js";
-import { HomePage } from "../../pages/HomePage.js";
-import { Header } from "../../pages/Header.js";
-import { ProductsPage } from "../../pages/ProductsPage.js";
-import { ProductDetailsPage } from "../../pages/ProductDetailsPage.js";
-import { CartPage } from "../../pages/CartPage.js";
-import { LoginPage } from "../../pages/LoginPage.js";
-import { createUser, existingUser } from "../data/users.js";
-import { SignupPage } from "../../pages/SignupPage.js";
-import { AccountCreatedPage } from "../../pages/AccountCreatedPage.js";
-import { CheckoutPage } from "../../pages/CheckoutPage.js";
-import { PaymentPage } from "../../pages/PaymentPage.js";
-import { DeleteAccountPage } from "../../pages/DeleteAccountPage.js";
+import { expect, test } from "../../fixtures/pages.fixture.js";
+import { createUser, existingUser } from "../../data/users.js";
 
-let homePage: HomePage;
-let header: Header;
-let productsPage: ProductsPage;
-let cartPage: CartPage;
-let loginPage: LoginPage;
-let signupPage: SignupPage;
-let accountCreatedPage: AccountCreatedPage;
-let checkoutPage: CheckoutPage;
-let paymentPage: PaymentPage;
-let deleteAccountPage: DeleteAccountPage;
 let newUser = createUser();
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
@@ -30,21 +9,22 @@ test.beforeEach(async ({ page }) => {
   if (await consentBtn.isVisible()) {
     await consentBtn.click();
   }
-
-  homePage = new HomePage(page);
-  header = new Header(page);
-  productsPage = new ProductsPage(page);
-  cartPage = new CartPage(page);
-  loginPage = new LoginPage(page);
-  signupPage = new SignupPage(page);
-  accountCreatedPage = new AccountCreatedPage(page);
-  paymentPage = new PaymentPage(page);
-  deleteAccountPage = new DeleteAccountPage(page);
-  checkoutPage = new CheckoutPage(page);
 });
 
 test.describe("checkout tests", () => {
-  test("place order - register while checkout", async ({ page }) => {
+  test("place order - register while checkout", async ({
+    homePage,
+    header,
+    productsPage,
+    cartPage,
+    loginPage,
+    signupPage,
+    accountCreatedPage,
+    paymentPage,
+    deleteAccountPage,
+    checkoutPage,
+    page,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -89,7 +69,19 @@ test.describe("checkout tests", () => {
 
     await expect(deleteAccountPage.accountDeletedHeading).toBeVisible();
   });
-  test("place order - register before checkout", async ({ page }) => {
+  test("place order - register before checkout", async ({
+    homePage,
+    header,
+    productsPage,
+    cartPage,
+    loginPage,
+    signupPage,
+    accountCreatedPage,
+    paymentPage,
+    deleteAccountPage,
+    checkoutPage,
+    page,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -135,7 +127,16 @@ test.describe("checkout tests", () => {
     await expect(deleteAccountPage.accountDeletedHeading).toBeVisible();
   });
 
-  test("place order - login before checkout", async ({ page }) => {
+  test("place order - login before checkout", async ({
+    homePage,
+    header,
+    productsPage,
+    cartPage,
+    loginPage,
+    paymentPage,
+    checkoutPage,
+    page,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 

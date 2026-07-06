@@ -1,13 +1,4 @@
-import { expect, test } from "../fixtures.js";
-import { HomePage } from "../../pages/HomePage.js";
-import { Header } from "../../pages/Header.js";
-import { ProductsPage } from "../../pages/ProductsPage.js";
-import { ProductDetailsPage } from "../../pages/ProductDetailsPage.js";
-
-let homePage: HomePage;
-let header: Header;
-let productsPage: ProductsPage;
-let productDetailsPage: ProductDetailsPage;
+import { expect, test } from "../../fixtures/pages.fixture.js";
 
 test.beforeEach(async ({ page }) => {
   await page.goto("https://automationexercise.com");
@@ -16,15 +7,16 @@ test.beforeEach(async ({ page }) => {
   if (await consentBtn.isVisible()) {
     await consentBtn.click();
   }
-
-  homePage = new HomePage(page);
-  header = new Header(page);
-  productsPage = new ProductsPage(page);
-  productDetailsPage = new ProductDetailsPage(page);
 });
 
 test.describe("products tests", () => {
-  test("view product details", async ({ page }) => {
+  test("view product details", async ({
+    page,
+    homePage,
+    header,
+    productsPage,
+    productDetailsPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -44,7 +36,12 @@ test.describe("products tests", () => {
     await expect(productDetailsPage.productCondition).toBeVisible();
     await expect(productDetailsPage.productBrand).toBeVisible();
   });
-  test("search product by name", async ({ page }) => {
+  test("search product by name", async ({
+    page,
+    homePage,
+    header,
+    productsPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -63,7 +60,12 @@ test.describe("products tests", () => {
     }
   });
 
-  test("add product to cart", async ({ page }) => {
+  test("add product to cart", async ({
+    page,
+    homePage,
+    header,
+    productsPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -83,7 +85,13 @@ test.describe("products tests", () => {
     await page.getByText("Men Tshirt").isVisible();
   });
 
-  test("add product to cart and verify quantity", async ({ page }) => {
+  test("add product to cart and verify quantity", async ({
+    page,
+    homePage,
+    header,
+    productsPage,
+    productDetailsPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -102,7 +110,12 @@ test.describe("products tests", () => {
     expect(quantity).toBe("4");
   });
 
-  test("remove product from cart", async ({ page }) => {
+  test("remove product from cart", async ({
+    page,
+    homePage,
+    header,
+    productsPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
