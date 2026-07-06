@@ -10,7 +10,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("products tests", () => {
-  test("view product details", async ({
+  test("view product details @smoke", async ({
     page,
     homePage,
     header,
@@ -36,7 +36,7 @@ test.describe("products tests", () => {
     await expect(productDetailsPage.productCondition).toBeVisible();
     await expect(productDetailsPage.productBrand).toBeVisible();
   });
-  test("search product by name", async ({
+  test("search product by name @regression", async ({
     page,
     homePage,
     header,
@@ -60,7 +60,7 @@ test.describe("products tests", () => {
     }
   });
 
-  test("add product to cart", async ({
+  test("add product to cart @smoke", async ({
     page,
     homePage,
     header,
@@ -85,7 +85,7 @@ test.describe("products tests", () => {
     await page.getByText("Men Tshirt").isVisible();
   });
 
-  test("add product to cart and verify quantity", async ({
+  test("add product to cart and verify quantity @regression", async ({
     page,
     homePage,
     header,
@@ -110,7 +110,7 @@ test.describe("products tests", () => {
     expect(quantity).toBe("4");
   });
 
-  test("remove product from cart", async ({
+  test("remove product from cart @regression", async ({
     page,
     homePage,
     header,

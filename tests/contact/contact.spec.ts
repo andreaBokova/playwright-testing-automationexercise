@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("contact tests", () => {
-  test("contact via form", async ({ page, homePage, header, contactPage }) => {
+  test("contact via form @smoke", async ({ page, homePage, header, contactPage }) => {
 
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");

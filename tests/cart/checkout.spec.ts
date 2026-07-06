@@ -12,7 +12,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("checkout tests", () => {
-  test("place order - register while checkout", async ({
+  test("place order - register while checkout @smoke", async ({
     homePage,
     header,
     productsPage,
@@ -69,7 +69,7 @@ test.describe("checkout tests", () => {
 
     await expect(deleteAccountPage.accountDeletedHeading).toBeVisible();
   });
-  test("place order - register before checkout", async ({
+  test("place order - register before checkout @smoke", async ({
     homePage,
     header,
     productsPage,
@@ -127,7 +127,7 @@ test.describe("checkout tests", () => {
     await expect(deleteAccountPage.accountDeletedHeading).toBeVisible();
   });
 
-  test("place order - login before checkout", async ({
+  test("place order - login before checkout @smoke", async ({
     homePage,
     header,
     productsPage,

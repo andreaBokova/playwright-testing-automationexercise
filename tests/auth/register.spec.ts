@@ -49,7 +49,7 @@ test.describe("Register tests", () => {
     await deleteAccountPage.continueToHomepage();
   });
 
-  test("register existing user", async ({ page, homePage, loginPage }) => {
+  test("register existing user @regression", async ({ page, homePage, loginPage }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 

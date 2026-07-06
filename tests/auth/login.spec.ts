@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Login tests", () => {
-  test("valid login", async ({ homePage, header, loginPage, page }) => {
+  test("valid login @smoke", async ({ homePage, header, loginPage, page }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
@@ -20,7 +20,7 @@ test.describe("Login tests", () => {
     await loginPage.login(existingUser.email, existingUser.password);
     await expect(page.getByText(/Logged in as/)).toBeVisible();
   });
-  test("invalid login", async ({ homePage, header, loginPage, page }) => {
+  test("invalid login @regression", async ({ homePage, header, loginPage, page }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 

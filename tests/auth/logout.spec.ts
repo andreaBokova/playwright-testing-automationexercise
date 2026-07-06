@@ -11,7 +11,7 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe("Logout tests", () => {
-  test("valid logout", async ({ page, loginPage, header, homePage }) => {
+  test("valid logout @smoke", async ({ page, loginPage, header, homePage }) => {
     await homePage.goto();
     expect(page).toHaveURL("https://automationexercise.com/");
 
