@@ -19,18 +19,19 @@ export class ProductsPage {
     this.viewCartButton = this.page.locator("#cartModal a[href='/view_cart']");
   }
 
-async addProductToCart(name: string) {
-  const product = this.page
-    .locator('.product-image-wrapper')
-    .filter({
-      has: this.page.locator('p', { hasText: name })
+  async addProductToCart(name: string) {
+    const product = this.page.locator(".product-image-wrapper").filter({
+      has: this.page.locator("p", { hasText: name }),
     });
 
-  const addBtn = product.locator('.product-overlay a.add-to-cart');
+    await product.scrollIntoViewIfNeeded();
+    await product.hover();
 
-  await expect(addBtn).toBeVisible();
-  await addBtn.click();
-}
+    const addBtn = product.locator(".product-overlay a.add-to-cart");
+
+    await expect(addBtn).toBeVisible();
+    await addBtn.click();
+  }
   async getDisplayedProductNames() {
     return this.page.locator(".productinfo p").allTextContents();
   }
