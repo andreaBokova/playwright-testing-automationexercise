@@ -2,14 +2,6 @@ import { expect, test } from "../../../fixtures/pages.fixture.js";
 import { createUser, existingUser } from "../../../data/users.js";
 
 let newUser = createUser();
-test.beforeEach(async ({ page }) => {
-  await page.goto("https://automationexercise.com");
-
-  const consentBtn = page.locator('button:has-text("Consent")');
-  if (await consentBtn.isVisible()) {
-    await consentBtn.click();
-  }
-});
 
 test.describe("checkout tests", () => {
   test("place order - register while checkout @smoke", async ({

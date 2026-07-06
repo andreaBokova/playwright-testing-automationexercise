@@ -1,15 +1,6 @@
 import { expect, test } from "../../../fixtures/pages.fixture.js";
 import { existingUser } from "../../../data/users.js";
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("https://automationexercise.com");
-
-  const consentBtn = page.locator('button:has-text("Consent")');
-  if (await consentBtn.isVisible()) {
-    await consentBtn.click();
-  }
-});
-
 test.describe("Logout tests", () => {
   test("valid logout @smoke", async ({ page, loginPage, header, homePage }) => {
     await homePage.goto();

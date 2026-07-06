@@ -1,15 +1,6 @@
 import { expect, test } from "../../../fixtures/pages.fixture.js";
 import { existingUser } from "../../../data/users.js";
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("https://automationexercise.com");
-
-  const consentBtn = page.locator('button:has-text("Consent")');
-  if (await consentBtn.isVisible()) {
-    await consentBtn.click();
-  }
-});
-
 test.describe("Login tests", () => {
   test("valid login @smoke", async ({ homePage, header, loginPage, page }) => {
     await homePage.goto();
@@ -20,7 +11,12 @@ test.describe("Login tests", () => {
     await loginPage.login(existingUser.email, existingUser.password);
     await expect(page.getByText(/Logged in as/)).toBeVisible();
   });
-  test("invalid login @regression", async ({ homePage, header, loginPage, page }) => {
+  test("invalid login @regression", async ({
+    homePage,
+    header,
+    loginPage,
+    page,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 

@@ -1,14 +1,5 @@
 import { expect, test } from "../../../fixtures/pages.fixture.js";
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("https://automationexercise.com");
-
-  const consentBtn = page.locator('button:has-text("Consent")');
-  if (await consentBtn.isVisible()) {
-    await consentBtn.click();
-  }
-});
-
 test.describe("products tests", () => {
   test("view product details @smoke", async ({
     page,

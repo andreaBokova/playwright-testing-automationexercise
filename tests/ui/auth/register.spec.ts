@@ -3,15 +3,6 @@ import { createUser, existingUser } from "../../../data/users.js";
 
 let newUser = createUser();
 
-test.beforeEach(async ({ page }) => {
-  await page.goto("https://automationexercise.com");
-
-  const consentBtn = page.locator('button:has-text("Consent")');
-  if (await consentBtn.isVisible()) {
-    await consentBtn.click();
-  }
-});
-
 test.describe("Register tests", () => {
   test("valid register user @smoke", async ({
     page,
@@ -49,7 +40,11 @@ test.describe("Register tests", () => {
     await deleteAccountPage.continueToHomepage();
   });
 
-  test("register existing user @regression", async ({ page, homePage, loginPage }) => {
+  test("register existing user @regression", async ({
+    page,
+    homePage,
+    loginPage,
+  }) => {
     await homePage.goto();
     await expect(page).toHaveURL("https://automationexercise.com/");
 
