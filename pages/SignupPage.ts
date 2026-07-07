@@ -1,22 +1,22 @@
 import { Page, Locator } from "@playwright/test";
 
 export interface User {
-  username: string;
+  name: string;
   email: string;
   gender: string;
   password: string;
   day: string;
   month: string;
   year: string;
-  firstName: string;
-  lastName: string;
+  firstname: string;
+  lastname: string;
   company: string;
-  address: string;
+  address1: string;
   country: string;
   state: string;
   city: string;
-  zipCode: string;
-  mobile: string;
+  zipcode: string;
+  mobile_number: string;
   newsletter: boolean;
 }
 
@@ -78,15 +78,15 @@ export class SignupPage {
       await this.newsletterCheckbox.check();
     }
 
-    await this.firstNameInput.fill(newUser.firstName);
-    await this.lastNameInput.fill(newUser.lastName);
+    await this.firstNameInput.fill(newUser.firstname);
+    await this.lastNameInput.fill(newUser.lastname);
     await this.companyInput.fill(newUser.company);
-    await this.addressInput.fill(newUser.address);
+    await this.addressInput.fill(newUser.address1);
     await this.countryDropdown.selectOption(newUser.country);
     await this.stateInput.fill(newUser.state);
     await this.cityInput.fill(newUser.city);
-    await this.zipCodeInput.fill(newUser.zipCode);
-    await this.mobileInput.fill(newUser.mobile);
+    await this.zipCodeInput.fill(newUser.zipcode);
+    await this.mobileInput.fill(newUser.mobile_number);
 
     await this.createAccountButton.click();
   }

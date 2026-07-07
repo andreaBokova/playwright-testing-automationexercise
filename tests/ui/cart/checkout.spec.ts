@@ -33,7 +33,7 @@ test.describe("checkout tests", () => {
     await cartPage.registerOrLoginButton.click();
 
     await expect(loginPage.signupForm).toBeVisible();
-    await loginPage.signup(newUser.username, newUser.email);
+    await loginPage.signup(newUser.name, newUser.email);
 
     await expect(signupPage.signupForm).toBeVisible();
 
@@ -80,7 +80,7 @@ test.describe("checkout tests", () => {
     header.gotoLogin();
 
     await expect(loginPage.signupForm).toBeVisible();
-    await loginPage.signup(newUser.username, newUser.email);
+    await loginPage.signup(newUser.name, newUser.email);
 
     await expect(signupPage.signupForm).toBeVisible();
 

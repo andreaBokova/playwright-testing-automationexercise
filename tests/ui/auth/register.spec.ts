@@ -21,7 +21,7 @@ test.describe("Register tests", () => {
 
     await expect(page.locator(".signup-form")).toBeVisible();
     console.log(`new user's email> ${newUser.email}`);
-    await loginPage.signup(newUser.username, newUser.email);
+    await loginPage.signup(newUser.name, newUser.email);
 
     await expect(page).toHaveURL(/signup/);
 

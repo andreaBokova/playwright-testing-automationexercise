@@ -2,32 +2,15 @@ import { test, expect } from "@playwright/test";
 import { existingUser } from "../../../data/users.js";
 import { createUser } from "../../../data/users.js";
 
-let newUser = createUser();
 test("POST to create/register user account @api @smoke", async ({
   request,
 }) => {
+  let newUser = createUser();
   // Create user
   const createResponse = await request.post(
     "https://automationexercise.com/api/createAccount",
     {
-      form: {
-        name: newUser.username,
-        email: newUser.email,
-        password: newUser.password,
-        title: "Mr",
-        birth_date: newUser.day,
-        birth_month: newUser.month,
-        birth_year: newUser.year,
-        firstname: newUser.firstName,
-        lastname: newUser.lastName,
-        company: newUser.company,
-        address1: newUser.address,
-        country: newUser.country,
-        zipcode: newUser.zipCode,
-        state: newUser.state,
-        city: newUser.city,
-        mobile_number: newUser.mobile,
-      },
+      form: newUser,
     },
   );
 
@@ -56,33 +39,18 @@ test("POST to create/register user account @api @smoke", async ({
   expect(getBody).toHaveProperty("user");
 
   expect(getBody.user.email).toBe(newUser.email);
-  expect(getBody.user.name).toBe(newUser.username);
+  expect(getBody.user.name).toBe(newUser.name);
 });
 
 test("PUT to update user account @api @smoke", async ({ request }) => {
-  const updatedName = "UpdatedUser";
-
+  const updatedName = `UpdatedUser${Date.now()}`;
   // Update user
   const updateResponse = await request.put(
     "https://automationexercise.com/api/updateAccount",
     {
       form: {
+        ...existingUser,
         name: updatedName,
-        email: existingUser.email,
-        password: existingUser.password,
-        title: "Mr",
-        birth_date: existingUser.day,
-        birth_month: existingUser.month,
-        birth_year: existingUser.year,
-        firstname: existingUser.firstName,
-        lastname: existingUser.lastName,
-        company: existingUser.company,
-        address1: existingUser.address,
-        country: existingUser.country,
-        zipcode: existingUser.zipCode,
-        state: existingUser.state,
-        city: existingUser.city,
-        mobile_number: existingUser.mobile,
       },
     },
   );
@@ -113,6 +81,7 @@ test("PUT to update user account @api @smoke", async ({ request }) => {
 });
 
 test("DELETE user account @api @regression", async ({ request }) => {
+  let newUser = createUser();
   // 1. Create user
   const createResponse = await request.post(
     "https://automationexercise.com/api/createAccount",
@@ -193,30 +162,13 @@ test("GET user account detail by email @api @regression", async ({
 test("User account lifecycle - create, get, update, delete @api @regression", async ({
   request,
 }) => {
-  const user = {
-    name: `testuser${Date.now()}`,
-    email: `test${Date.now()}@gmail.com`,
-    password: "Password123",
-    title: "Mr",
-    birth_date: "6",
-    birth_month: "October",
-    birth_year: "2000",
-    firstname: "John",
-    lastname: "Doe",
-    company: "TestCo",
-    address1: "Street 1",
-    country: "Canada",
-    zipcode: "12345",
-    state: "State",
-    city: "City",
-    mobile_number: "1234567890",
-  };
+  const newUser = createUser();
 
   // 1. CREATE USER
   const createResponse = await request.post(
     "https://automationexercise.com/api/createAccount",
     {
-      form: user,
+      form: newUser,
     },
   );
 
@@ -232,7 +184,7 @@ test("User account lifecycle - create, get, update, delete @api @regression", as
     "https://automationexercise.com/api/getUserDetailByEmail",
     {
       params: {
-        email: user.email,
+        email: newUser.email,
       },
     },
   );
@@ -242,14 +194,14 @@ test("User account lifecycle - create, get, update, delete @api @regression", as
   const getBody = await getResponse.json();
 
   expect(getBody.responseCode).toBe(200);
-  expect(getBody.user.email).toBe(user.email);
+  expect(getBody.user.email).toBe(newUser.email);
 
   // 3. UPDATE USER
   const updateResponse = await request.put(
     "https://automationexercise.com/api/updateAccount",
     {
       form: {
-        ...user,
+        ...newUser,
         name: "updatedUser",
       },
     },
@@ -267,7 +219,7 @@ test("User account lifecycle - create, get, update, delete @api @regression", as
     "https://automationexercise.com/api/getUserDetailByEmail",
     {
       params: {
-        email: user.email,
+        email: newUser.email,
       },
     },
   );
@@ -281,8 +233,8 @@ test("User account lifecycle - create, get, update, delete @api @regression", as
     "https://automationexercise.com/api/deleteAccount",
     {
       form: {
-        email: user.email,
-        password: user.password,
+        email: newUser.email,
+        password: newUser.password,
       },
     },
   );
@@ -299,7 +251,7 @@ test("User account lifecycle - create, get, update, delete @api @regression", as
     "https://automationexercise.com/api/getUserDetailByEmail",
     {
       params: {
-        email: user.email,
+        email: newUser.email,
       },
     },
   );
