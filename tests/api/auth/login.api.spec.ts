@@ -1,7 +1,7 @@
 import { test, expect } from "@playwright/test";
 import { existingUser } from "../../../data/users.js";
 
-test("POST to verify login with valid details @api", async ({ request }) => {
+test("POST to verify login with valid details @api @smoke", async ({ request }) => {
   const response = await request.post(
     "https://automationexercise.com/api/verifyLogin",
     {
@@ -20,7 +20,7 @@ test("POST to verify login with valid details @api", async ({ request }) => {
   expect(body.message).toBe("User exists!");
 });
 
-test("POST to verify login without email parameter (bad request) @api", async ({
+test("POST to verify login without email parameter (bad request) @api @regression", async ({
   request,
 }) => {
   const response = await request.post(
@@ -42,7 +42,7 @@ test("POST to verify login without email parameter (bad request) @api", async ({
   );
 });
 
-test("DELETE to verify login (method not allowed) @api", async ({
+test("DELETE to verify login (method not allowed) @api @regression", async ({
   request,
 }) => {
   const response = await request.delete(
@@ -57,7 +57,7 @@ test("DELETE to verify login (method not allowed) @api", async ({
   expect(body.message).toBe("This request method is not supported.");
 });
 
-test("POST to verify login with invalid details (resource not found) @api", async ({
+test("POST to verify login with invalid details (resource not found) @api @regression", async ({
   request,
 }) => {
   const response = await request.post(

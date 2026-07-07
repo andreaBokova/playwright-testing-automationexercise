@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("get all brands list @api", async ({ request }) => {
+test("get all brands list @api @smoke", async ({ request }) => {
   const response = await request.get(
     "https://automationexercise.com/api/brandsList",
   );
@@ -17,7 +17,7 @@ test("get all brands list @api", async ({ request }) => {
   expect(body.brands[0]).toHaveProperty("brand");
 });
 
-test("PUT to all brands list (method not allowed) @api", async ({ request }) => {
+test("PUT to all brands list (method not allowed) @api @regression", async ({ request }) => {
   const response = await request.put(
     "https://automationexercise.com/api/brandsList",
   );

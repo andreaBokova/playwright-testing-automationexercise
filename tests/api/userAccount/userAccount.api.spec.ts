@@ -3,7 +3,9 @@ import { existingUser } from "../../../data/users.js";
 import { createUser } from "../../../data/users.js";
 
 let newUser = createUser();
-test("POST to create/register user account @api", async ({ request }) => {
+test("POST to create/register user account @api @smoke", async ({
+  request,
+}) => {
   // Create user
   const createResponse = await request.post(
     "https://automationexercise.com/api/createAccount",
@@ -57,7 +59,7 @@ test("POST to create/register user account @api", async ({ request }) => {
   expect(getBody.user.name).toBe(newUser.username);
 });
 
-test("PUT to update user account @api", async ({ request }) => {
+test("PUT to update user account @api @smoke", async ({ request }) => {
   const updatedName = "UpdatedUser";
 
   // Update user
@@ -156,7 +158,9 @@ test("DELETE user account @api @regression", async ({ request }) => {
   expect(getBody.responseCode).toBe(404);
 });
 
-test("GET user account detail by email @api", async ({ request }) => {
+test("GET user account detail by email @api @regression", async ({
+  request,
+}) => {
   const response = await request.get(
     `https://automationexercise.com/api/getUserDetailByEmail?email=${existingUser.email}`,
   );

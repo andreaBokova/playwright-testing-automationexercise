@@ -1,6 +1,6 @@
 import { test, expect } from "@playwright/test";
 
-test("get all products list @api", async ({ request }) => {
+test("get all products list @api @smoke", async ({ request }) => {
   const response = await request.get(
     "https://automationexercise.com/api/productsList",
   );
@@ -20,7 +20,7 @@ test("get all products list @api", async ({ request }) => {
   expect(body.products[0]).toHaveProperty("category");
 });
 
-test("post to all products list (method not allowed) @api", async ({ request }) => {
+test("post to all products list (method not allowed) @api @regression", async ({ request }) => {
   const response = await request.post(
     "https://automationexercise.com/api/productsList",
   );
@@ -33,7 +33,7 @@ test("post to all products list (method not allowed) @api", async ({ request }) 
   expect(body.message).toBe("This request method is not supported.");
 });
 
-test("search product with valid parameter @api", async ({ request }) => {
+test("search product with valid parameter @api @smoke", async ({ request }) => {
   const response = await request.post(
     "https://automationexercise.com/api/searchProduct",
     {
@@ -52,7 +52,7 @@ test("search product with valid parameter @api", async ({ request }) => {
   expect(Array.isArray(body.products)).toBe(true);
 });
 
-test("search product without parameter (bad request) @api", async ({ request }) => {
+test("search product without parameter (bad request) @api @regression", async ({ request }) => {
   const response = await request.post(
     "https://automationexercise.com/api/searchProduct",
     {
